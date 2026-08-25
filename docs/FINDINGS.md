@@ -1736,6 +1736,21 @@ beside a waited-on scoreboard, which carries no requirement at all because the w
 mechanism, and 217,855 of the wide run's were a read barrier the vendor covers with spacing
 instead. Both are gone, because a tool that cannot ground a claim should not make it.
 
+## Where these findings sit against published work
+
+Not every finding here establishes something, and the ones that do not are more useful for it.
+The premise underlying [finding 3](#3-understalling-corrupts-silently-and-basalt-predicts-exactly-when),
+that sm_120 does not interlock and a short stall count reads a stale register with no fault, was
+published before this work, as was the fp64 figure in
+[finding 4](#4-required-stall-by-three-independent-methods): 63.57 cycles by Jarmusch, Graddon
+and Chandrasekaran in July 2025, and 64.13 by a cycle-level characterisation in May 2026,
+against the 63.99 measured here. Three parties, three methods, three parts, one number. Those
+findings reproduce independently rather than establish, and are stronger evidence for it.
+
+What no published work carried as of August 2026 is the per-pair requirement the rest of these
+findings build, or a checker validated on one against code held out of every table it reads.
+The full comparison, with links, is in [the method](METHOD.md#prior-and-concurrent-work-on-sm_120).
+
 ## 30. What is deliberately not claimed
 
 Stated so the boundary of the evidence is visible.
