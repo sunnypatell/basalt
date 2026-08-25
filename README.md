@@ -183,38 +183,23 @@ foreign input is worse than a wrong verdict, because the caller gets neither.
 
 ## What is new here, and what is not
 
-Drawn explicitly so nobody has to infer it.
+Nothing here was taken from prior work: the encoding and the timings were derived by
+measurement and compared afterwards.
 
-**Known before this work, and cited rather than re-announced.** That sm_120 packs each
-instruction into 128 bits carrying a 21-bit scheduling control word. That the hardware does not
-interlock fixed-latency instructions, so a stall count below the producer's latency reads a
-stale register with no fault and no crash. That dependent fp64 costs about 64 cycles on this
-silicon, published by [Jarmusch et al.](https://arxiv.org/abs/2507.10789) in July 2025 and again
-by [a cycle-level characterisation](https://zartbot.github.io/micro_arch/nvidia/sm_120/paper.html)
-in May 2026. basalt measured 63.99 on its own card and agrees with both, which is corroboration
+**Known before this work, and cited rather than re-announced.** The 128-bit instruction with
+its 21-bit control word, and that the hardware does not interlock, so a short stall count reads
+a stale register with no fault. That dependent fp64 costs about 64 cycles on this silicon,
+published by [Jarmusch et al.](https://arxiv.org/abs/2507.10789) in July 2025 and again by [a
+cycle-level characterisation](https://zartbot.github.io/micro_arch/nvidia/sm_120/paper.html) in
+May 2026. basalt measured 63.99 independently and agrees with both, which is corroboration
 rather than a finding.
 
-**New here.** As of August 2026, no published work carried any of the following:
-
-- A **per-pair stall requirement**, in machine-readable form or otherwise. Prior work published
-  latencies. A latency is how long an instruction takes; a requirement is what has to sit between
-  one specific producer and one specific consumer, and
-  [finding 21](https://github.com/sunnypatell/basalt/blob/main/docs/FINDINGS.md#21-a-corpus-of-two-instruction-kernels-overestimates-what-the-compiler-requires)
-  and [finding 23](https://github.com/sunnypatell/basalt/blob/main/docs/FINDINGS.md#23-an-operand-read-is-not-instantaneous-and-nothing-was-modelling-that)
-  show the second is a property of the pair rather than a constant of the first.
-- That a predicate costs **thirteen cycles as a guard and five as data**
-  ([finding 9](https://github.com/sunnypatell/basalt/blob/main/docs/FINDINGS.md#9-a-guard-predicate-costs-two-and-a-half-times-an-ordinary-read)).
-- That a waited-on scoreboard **still leaves a stall owing**
-  ([finding 7](https://github.com/sunnypatell/basalt/blob/main/docs/FINDINGS.md#7-fp64-is-carried-by-the-scoreboard-and-still-owes-a-small-stall)).
-- That a stall of zero is a **long safe wait rather than none**
-  ([finding 1](https://github.com/sunnypatell/basalt/blob/main/docs/FINDINGS.md#1-a-stall-count-of-zero-is-a-safe-encoding-not-zero-cycles)).
-- An **audit of vendor code held out of every table the checker reads**: 2,762 kernels NVIDIA
-  ships inside CUDA, 0 errors across 10.2M dependencies, after a first run that reported 6,593
-  and was wrong every single time
-  ([finding 32](https://github.com/sunnypatell/basalt/blob/main/docs/FINDINGS.md#32-pointing-the-checker-at-code-basalt-did-not-produce)).
-
-The premise came from elsewhere and is credited. The requirement, and everything built on it,
-did not.
+**New here.** As of August 2026, no published work carried a per-pair stall requirement in
+machine-readable form, nor a checker built on one and validated against vendor code held out of
+every table it reads. Prior work published latencies; a latency is how long an instruction
+takes, and a requirement is what has to sit between one specific producer and one specific
+consumer. The rest of this page is what that distinction bought. Full treatment in
+[the method](https://github.com/sunnypatell/basalt/blob/main/docs/METHOD.md#prior-and-concurrent-work-on-sm_120).
 
 ## Which GPUs
 
