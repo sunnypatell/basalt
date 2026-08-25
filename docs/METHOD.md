@@ -366,7 +366,9 @@ arrived at here matches one published independently in May 2026. Corroboration o
 worth more than any single measurement, and it is exactly why none of it is claimed as new. The
 premise this work rests on was established elsewhere and is cited rather than re-announced.
 
-**What this work adds.** A latency is not a requirement. Finding 21 and finding 23 show the gap
+**What this work adds.** Prior work documented portions of the sm_120 encoding, measured
+its timings, and built pattern libraries for reading a dump by hand. None of it carried a
+requirement, and a latency is not a requirement. Finding 21 and finding 23 show the gap
 a pairing needs is a property of the pair rather than a constant of the producer, and finding 9
 that the same predicate costs thirteen cycles as a guard and five as data. As of August 2026, no
 published work carried a per-pair requirement model in machine-readable form, nor a checker built
