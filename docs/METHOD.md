@@ -337,34 +337,39 @@ recoverable from the encoding, or if the requirement varied with something unobs
 Neither holds. The operand fields are recovered and their writability is proven (stage 9), and
 finding 28 shows the requirement is a property of the architecture rather than of the part.
 
-## Concurrent work on sm_120, and what it does not settle
+## Prior and concurrent work on sm_120
 
-Two public efforts reached parts of this ground first, and both are worth reading before
-this one.
+Three public efforts reached parts of this ground first. What follows describes the state each
+was in when it was consulted, in August 2026. All three may have moved since, and anyone
+checking novelty should read them as they stand rather than as they are summarised here.
+
+[Dissecting the NVIDIA Blackwell Architecture with Microbenchmarks](https://arxiv.org/abs/2507.10789)
+(Jarmusch, Graddon and Chandrasekaran, July 2025) measures an RTX 5080, the same GB203 silicon
+family as the part measured here, and reports dependent fp64 latency at 63.57 cycles. It is a
+performance characterisation, and the earliest published measurement of this architecture's
+timings this work is aware of.
 
 [SASS King](https://github.com/florianmattana/sass-king) (April 2026, Apache-2.0) is a
-reverse-engineering knowledge base for sm_120 and sm_89: a corpus of controlled kernels with
-their SASS dumps, an instruction glossary, and a library of 29 named patterns for reading a
-dump by hand. Its encoding notes decode tensor-core dtype and family bits and the `DEPBAR.LE`
-wait-group argument, and say of themselves that they are "not a complete hardware bit map",
-with the placement of the scheduling fields left open. It carries no latency figures and no
-requirement model, and its stated next phase, applying the pattern library to production
-kernels, is a human-led audit rather than a decision procedure.
+reverse-engineering knowledge base for sm_120 and sm_89: controlled kernels with their SASS
+dumps, an instruction glossary, and a library of named patterns for reading a dump by hand.
+Its encoding notes describe themselves as "not a complete hardware bit map".
 
 [Dissecting the SM_120 Microarchitecture](https://zartbot.github.io/micro_arch/nvidia/sm_120/paper.html)
-(May 2026) is a cycle-level characterisation of consumer Blackwell. It reports the same
-control field layout basalt measured, in bit numbers local to the upper half of the word, and
-states the same premise: sm_120 does not interlock, and a stall count below the producer's
-latency reads a stale register with no fault. It measures instruction latency on a GB203 part
-and reports `DFMA` at 64.13 cycles, against the 64 measured here on a different SKU. That
-agreement is worth more than either measurement alone. The document declares itself generated
-without author review, releases no code or data, and reports no error bars, held-out test, or
-defects in its own model.
+(May 2026) is a cycle-level characterisation of consumer Blackwell. It reports the same control
+field layout measured here, in bit numbers local to the upper half of the word, and states the
+same premise: sm_120 does not interlock, and a stall count below the producer's latency reads a
+stale register with no fault. It reports `DFMA` at 64.13 cycles.
 
-**What neither settles.** A latency is not a requirement. Finding 21 and finding 23 show the
-gap a pairing needs is a property of the pair rather than a constant of the producer, and
-finding 9 that the same predicate costs thirteen cycles as a guard and five as data. Neither
-effort publishes a per-pair requirement, in machine-readable form or otherwise, and neither
-builds anything that decides. The contribution here is not that the control word was found;
-it is that a requirement model was measured, held out from the code it was then used to check,
-and reported wrong 6,593 times before it was reported right.
+**Where they agree, and why that is the point.** Three parties, three methods, three parts, one
+number: 63.57, 64.13, and the 63.99 measured here for dependent fp64. The control field map
+arrived at here matches one published independently in May 2026. Corroboration of that kind is
+worth more than any single measurement, and it is exactly why none of it is claimed as new. The
+premise this work rests on was established elsewhere and is cited rather than re-announced.
+
+**What this work adds.** A latency is not a requirement. Finding 21 and finding 23 show the gap
+a pairing needs is a property of the pair rather than a constant of the producer, and finding 9
+that the same predicate costs thirteen cycles as a guard and five as data. As of August 2026, no
+published work carried a per-pair requirement model in machine-readable form, nor a checker built
+on one and validated against code held out of every table it reads. That is what is offered here:
+not that the control word was found, but that a requirement model was measured, held out, and
+reported wrong 6,593 times before it was reported right.
