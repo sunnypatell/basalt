@@ -339,8 +339,10 @@ finding 28 shows the requirement is a property of the architecture rather than o
 
 ## Prior and concurrent work on sm_120
 
-Three public efforts reached parts of this ground first. What follows describes the state each
-was in when it was consulted, in August 2026. All three may have moved since, and anyone
+Three public efforts reached parts of this ground first. Nothing here was taken from them: the
+encoding and the timings below were derived by measurement and compared afterwards, so where
+they agree the agreement is reported as corroboration rather than relied on as a source. What
+follows describes the state each was in when it was consulted, in August 2026. All three may have moved since, and anyone
 checking novelty should read them as they stand rather than as they are summarised here.
 
 [Dissecting the NVIDIA Blackwell Architecture with Microbenchmarks](https://arxiv.org/abs/2507.10789)
@@ -356,15 +358,17 @@ Its encoding notes describe themselves as "not a complete hardware bit map".
 
 [Dissecting the SM_120 Microarchitecture](https://zartbot.github.io/micro_arch/nvidia/sm_120/paper.html)
 (May 2026) is a cycle-level characterisation of consumer Blackwell. It reports the same control
-field layout measured here, in bit numbers local to the upper half of the word, and states the
+field layout the bit probing here arrived at independently, in bit numbers local to the upper
+half of the word, and states the
 same premise: sm_120 does not interlock, and a stall count below the producer's latency reads a
 stale register with no fault. It reports `DFMA` at 64.13 cycles.
 
 **Where they agree, and why that is the point.** Three parties, three methods, three parts, one
 number: 63.57, 64.13, and the 63.99 measured here for dependent fp64. The control field map
 arrived at here matches one published independently in May 2026. Corroboration of that kind is
-worth more than any single measurement, and it is exactly why none of it is claimed as new. The
-premise this work rests on was established elsewhere and is cited rather than re-announced.
+worth more than any single measurement, which is why the fp64 figure and the field map are
+reported here as agreement rather than claimed as findings of this work. The premise this work
+rests on was established elsewhere and is cited rather than re-announced.
 
 **What this work adds.** Prior work documented portions of the sm_120 encoding, measured
 its timings, and built pattern libraries for reading a dump by hand. None of it carried a
