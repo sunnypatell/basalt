@@ -66,7 +66,7 @@ jobs:
           persist-credentials: false
 
       - name: Check the workflows are safe
-        uses: zizmorcore/zizmor-action@3dc1ecc9bcb9e94e9b2c709687979e1298497054 # v0.6.2
+        uses: zizmorcore/zizmor-action@cc914d7f3750a2d13d75c7f184a1060aa0e9d482 # v0.6.4
         with:
           # medium and up fails the build; low and informational stay visible
           # locally without turning every run into noise to be ignored
