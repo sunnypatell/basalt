@@ -34,7 +34,7 @@ repos:
       - id: forbid-submodules
 
   - repo: https://github.com/astral-sh/ruff-pre-commit
-    rev: v0.16.3
+    rev: v0.16.8
     hooks:
       - id: ruff-check
         args: [--fix]
@@ -62,7 +62,7 @@ repos:
       - id: actionlint
         args: [-ignore, SC2086, -ignore, SC2129]
   - repo: https://github.com/zizmorcore/zizmor-pre-commit
-    rev: v1.29.0
+    rev: v1.30.1
     hooks:
       - id: zizmor
         args: [--min-severity=medium]
