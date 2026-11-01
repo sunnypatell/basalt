@@ -48,7 +48,7 @@ jobs:
       id-token: write # trusted publishing, and attestation verification
     steps:
       - name: Record what this job talks to
-        uses: step-security/harden-runner@05e31511f85b41b11d1cf0ef85d0992719546e2c # v2.21.0
+        uses: step-security/harden-runner@46b06cea07f9e64621fdf066ba77ac6915163d43 # v2.22.3
         with:
           egress-policy: audit
 
@@ -112,7 +112,7 @@ jobs:
           done
 
       - name: Upload to PyPI
-        uses: pypa/gh-action-pypi-publish@dc37677b2e1c63e2034f94d8a5b11f265b73ba33 # v1.14.2
+        uses: pypa/gh-action-pypi-publish@7245906fb61fa33a13554f9d5fb856fe61758086 # v1.14.3
         with:
           # PEP 740 attestations, signed with this workflow's own identity, so
           # the provenance survives onto the index rather than stopping at the
