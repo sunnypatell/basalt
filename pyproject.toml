@@ -42,8 +42,8 @@ dev = [
   # CI rejects without anyone making a commit, and a contributor goes red on
   # code they did not touch. these two track .pre-commit-config.yaml exactly,
   # so the local hook and the runner cannot disagree; dependabot moves both.
-  "ruff==0.16.3",
-  "mypy==2.3.1",
+  "ruff==0.17.2",
+  "mypy==2.4.0",
 ]
 
 [project.urls]
