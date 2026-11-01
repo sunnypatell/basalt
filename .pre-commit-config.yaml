@@ -34,14 +34,14 @@ repos:
       - id: forbid-submodules
 
   - repo: https://github.com/astral-sh/ruff-pre-commit
-    rev: v0.16.3
+    rev: v0.17.2
     hooks:
       - id: ruff-check
         args: [--fix]
       - id: ruff-format
 
   - repo: https://github.com/pre-commit/mirrors-mypy
-    rev: v2.3.1
+    rev: v2.4.0
     hooks:
       # both platforms from one machine: the driver loads a different library on
       # each, and only the host's branch would otherwise be type-checked
@@ -62,7 +62,7 @@ repos:
       - id: actionlint
         args: [-ignore, SC2086, -ignore, SC2129]
   - repo: https://github.com/zizmorcore/zizmor-pre-commit
-    rev: v1.29.0
+    rev: v1.31.1
     hooks:
       - id: zizmor
         args: [--min-severity=medium]
